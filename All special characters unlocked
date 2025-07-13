@@ -122,6 +122,22 @@ updateDesc.Font = Enum.Font.Gotham
 updateDesc.TextSize = 14
 updateDesc.TextYAlignment = Enum.TextYAlignment.Top
 
+local updateFrame2 = Instance.new("Frame")
+updateFrame2.Name = "Update_2"
+updateFrame2.Size = UDim2.new(1, -40, 0, 80)
+updateFrame2.Position = UDim2.new(0, 20, 0, 90)
+updateFrame2.BackgroundTransparency = 1
+updateFrame2.Parent = scrollFrame
+
+local updateTitle2 = createTextLabel(updateFrame2, "Version 1.0.5", UDim2.new(1, -24, 0, -50), UDim2.new(0, 0, 0, 0))
+updateTitle2.TextXAlignment = Enum.TextXAlignment.Left
+
+local updateDesc2 = createTextLabel(updateFrame2, "Bug Fixed InstructionsGUI", UDim2.new(1, 0, 0, 25), UDim2.new(0, 0, 0, 0))
+updateDesc2.TextColor3 = Color3.fromRGB(200, 200, 200)
+updateDesc2.Font = Enum.Font.Gotham
+updateDesc2.TextSize = 14
+updateDesc2.TextYAlignment = Enum.TextYAlignment.Top
+
 scrollFrame.CanvasSize = UDim2.new(0, 0, 0, 80)
 
 local clueGui = Instance.new("ScreenGui")
@@ -131,6 +147,7 @@ clueGui.Parent = playerGui
 
 local clueFrame = createStyledFrame("ClueFrame", UDim2.new(0, 300, 0, 80), UDim2.new(0.5, 0, 0.8, 0))
 clueFrame.Parent = clueGui
+clueFrame.Size = UDim2.new(0, 0, 0, 0)
 
 local clueText = createTextLabel(clueFrame, "Select any character and reset", UDim2.new(1, -20, 1, -20), UDim2.new(0, 10, 0, 10))
 clueText.TextXAlignment = Enum.TextXAlignment.Center
@@ -145,6 +162,7 @@ local clueCanClose = false
 
 local function showUI()
     mainFrame.Visible = true
+    clueFrame.Visible = true
     
     local blurTween = TweenService:Create(
         blurEffect,
@@ -154,13 +172,23 @@ local function showUI()
     blurTween:Play()
     
     mainFrame.Size = UDim2.new(0, 0, 0, 0)
+    clueFrame.Size = UDim2.new(0, 0, 0, 0)
     
-    local sizeTween = TweenService:Create(
+    local mainSizeTween = TweenService:Create(
         mainFrame,
         TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
         {Size = UDim2.new(0, 400, 0, 500)}
     )
-    sizeTween:Play()
+    mainSizeTween:Play()
+    
+    task.delay(0.2, function()
+        local clueSizeTween = TweenService:Create(
+            clueFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0, 300, 0, 80)}
+        )
+        clueSizeTween:Play()
+    end)
     
     task.delay(0.2, function()
         for _, child in ipairs(mainFrame:GetDescendants()) do
@@ -173,28 +201,19 @@ local function showUI()
                 tween:Play()
             end
         end
+        
+        for _, child in ipairs(clueFrame:GetDescendants()) do
+            if child:IsA("TextLabel") then
+                local tween = TweenService:Create(
+                    child,
+                    TweenInfo.new(0.3),
+                    {TextTransparency = 0}
+                )
+                tween:Play()
+            end
+        end
+        
         canClose = true
-    end)
-
-    task.delay(1, function()
-        clueFrame.Visible = true
-        clueFrame.BackgroundTransparency = 1
-        clueText.TextTransparency = 1
-        
-        local frameTween = TweenService:Create(
-            clueFrame,
-            TweenInfo.new(0.5),
-            {BackgroundTransparency = 0.15}
-        )
-        frameTween:Play()
-        
-        local textTween = TweenService:Create(
-            clueText,
-            TweenInfo.new(0.5),
-            {TextTransparency = 0}
-        )
-        textTween:Play()
-        
         clueCanClose = true
     end)
 end
@@ -211,39 +230,41 @@ local function hideUI()
         if child:IsA("TextLabel") then
             local tween = TweenService:Create(
                 child,
-                TweenInfo.new(0.3),
+                TweenInfo.new(0.2),
                 {TextTransparency = 1}
             )
             tween:Play()
         end
     end
 
-    if clueCanClose then
-        local frameTween = TweenService:Create(
-            clueFrame,
-            TweenInfo.new(0.3),
-            {BackgroundTransparency = 1}
-        )
-        frameTween:Play()
-        
-        local textTween = TweenService:Create(
-            clueText,
-            TweenInfo.new(0.3),
-            {TextTransparency = 1}
-        )
-        textTween:Play()
+    for _, child in ipairs(clueFrame:GetDescendants()) do
+        if child:IsA("TextLabel") then
+            local tween = TweenService:Create(
+                child,
+                TweenInfo.new(0.15),
+                {TextTransparency = 1}
+            )
+            tween:Play()
+        end
     end
     
-    local sizeTween = TweenService:Create(
+    local mainSizeTween = TweenService:Create(
         mainFrame,
         TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.In),
         {Size = UDim2.new(0, 0, 0, 0)}
     )
-    sizeTween:Play()
+    mainSizeTween:Play()
+    
+    local clueSizeTween = TweenService:Create(
+        clueFrame,
+        TweenInfo.new(0.25, Enum.EasingStyle.Back, Enum.EasingDirection.In),
+        {Size = UDim2.new(0, 0, 0, 0)}
+    )
+    clueSizeTween:Play()
     
     local blurTween = TweenService:Create(
         blurEffect,
-        TweenInfo.new(0.5),
+        TweenInfo.new(0.35),
         {Size = 0}
     )
     blurTween:Play()
