@@ -138,7 +138,23 @@ updateDesc2.Font = Enum.Font.Gotham
 updateDesc2.TextSize = 14
 updateDesc2.TextYAlignment = Enum.TextYAlignment.Top
 
-scrollFrame.CanvasSize = UDim2.new(0, 0, 0, 80)
+local updateFrame3 = Instance.new("Frame")
+updateFrame3.Name = "Update_3"
+updateFrame3.Size = UDim2.new(1, -40, 0, 80)
+updateFrame3.Position = UDim2.new(0, 20, 0, 180)
+updateFrame3.BackgroundTransparency = 1
+updateFrame3.Parent = scrollFrame
+
+local updateTitle3 = createTextLabel(updateFrame3, "Version 1.1.0", UDim2.new(1, -24, 0, -100), UDim2.new(0, 0, 0, 0))
+updateTitle3.TextXAlignment = Enum.TextXAlignment.Left
+
+local updateDesc3 = createTextLabel(updateFrame3, "Small optimization + Uptade InstructionsGUI", UDim2.new(1, 0, 0, -25), UDim2.new(0, 0, 0, 0))
+updateDesc3.TextColor3 = Color3.fromRGB(200, 200, 200)
+updateDesc3.Font = Enum.Font.Gotham
+updateDesc3.TextSize = 14
+updateDesc3.TextYAlignment = Enum.TextYAlignment.Top
+
+scrollFrame.CanvasSize = UDim2.new(0, 0, 0, 180)
 
 local clueGui = Instance.new("ScreenGui")
 clueGui.Name = "ClueGui"
@@ -215,6 +231,28 @@ local function showUI()
         
         canClose = true
         clueCanClose = true
+    end)
+
+    task.delay(4, function()
+        if clueFrame and clueFrame.Parent then
+            for _, child in ipairs(clueFrame:GetDescendants()) do
+                if child:IsA("TextLabel") then
+                    local tween = TweenService:Create(
+                        child,
+                        TweenInfo.new(0.3),
+                        {TextTransparency = 1}
+                    )
+                    tween:Play()
+                end
+            end
+            
+            local clueSizeTween = TweenService:Create(
+                clueFrame,
+                TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In),
+                {Size = UDim2.new(0, 0, 0, 0)}
+            )
+            clueSizeTween:Play()
+        end
     end)
 end
 
