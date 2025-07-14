@@ -154,7 +154,7 @@ updateDesc3.Font = Enum.Font.Gotham
 updateDesc3.TextSize = 14
 updateDesc3.TextYAlignment = Enum.TextYAlignment.Top
 
-scrollFrame.CanvasSize = UDim2.new(0, 0, 0, 180)
+scrollFrame.CanvasSize = UDim2.new(0, 0, 0, 80)
 
 local clueGui = Instance.new("ScreenGui")
 clueGui.Name = "ClueGui"
