@@ -1,4 +1,4 @@
-loadstring(game:HttpGet('https://raw.githubusercontent.com/SUUUUUS00000/Error/refs/heads/main/Unsupported.lua'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/SUUUUUS00000/All-special-characters-unlocked/refs/heads/main/Unsupported.lua'))()
 
 game.Players.LocalPlayer.PlayerGui.AchievementSaves:WaitForChild("Gamepass_Jevil").Value = true
 game.Players.LocalPlayer.PlayerGui.AchievementSaves:WaitForChild("Badge_AlphysNeo").Value = true
